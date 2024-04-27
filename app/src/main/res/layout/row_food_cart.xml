@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/ivProductImage"
+        android:layout_width="@dimen/product_image_size"
+        android:layout_height="@dimen/product_image_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProductName"
+        style="@style/StyleLabelText"
+        android:layout_marginStart="@dimen/_6dp"
+        android:layout_marginTop="@dimen/_6dp"
+        app:layout_constraintStart_toEndOf="@id/ivProductImage"
+        app:layout_constraintTop_toTopOf="@id/ivProductImage" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        style="@style/StyleLabelText"
+        android:layout_marginStart="@dimen/_6dp"
+        android:layout_marginTop="@dimen/_6dp"
+        app:layout_constraintStart_toEndOf="@id/ivProductImage"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName" />
+
+    <LinearLayout
+        android:layout_width="46dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="@dimen/_12dp"
+        android:layout_marginTop="@dimen/_6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName">
+
+        <TextView
+            android:id="@+id/tvDecrementBtn"
+            style="@style/StyleLabelText"
+            android:layout_width="@dimen/_12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            style="@style/StyleLabelText"
+            android:layout_width="@dimen/_12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tvIncementBtn"
+            style="@style/StyleLabelText"
+            android:layout_width="@dimen/_12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="+" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

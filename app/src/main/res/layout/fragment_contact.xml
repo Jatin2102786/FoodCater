@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.Fragment.ContactFragment">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:id="@+id/toolbar"
+        android:background="@color/colorMain"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            style="@style/StyleHeaderText"
+            android:text="Contact"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/etPhone1"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/drawable_input_edittext_backgound"
+        android:hint="Enter phone number 1"
+        android:inputType="number"
+        android:maxLength="10"
+        app:layout_constraintVertical_bias="0.05"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/_12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+       android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:id="@+id/etPhone2"
+        android:inputType="number"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:hint="Enter phone number 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="@dimen/_12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/drawable_input_edittext_backgound"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/etPhone1"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/StyleSubmitButton"
+        app:layout_constraintTop_toBottomOf="@id/etPhone2"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Add"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:id="@+id/btnSubmit"/>
+
+    <TextView
+       style="@style/StyleHeaderText"
+        android:id="@+id/tvHint"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@id/btnSubmit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Added Phone number"/>
+
+    <TextView
+        android:id="@+id/tvPhone1"
+       style="@style/StyleLabelText"
+        app:layout_constraintTop_toBottomOf="@id/tvHint"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/_18dp"
+        android:textSize="@dimen/_18dp"
+        android:layout_marginStart="@dimen/_16dp"/>
+
+    <TextView
+        android:id="@+id/tvPhone2"
+       style="@style/StyleLabelText"
+        app:layout_constraintTop_toBottomOf="@id/tvPhone1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/_12dp"
+        android:textSize="@dimen/_18dp"
+        android:layout_marginStart="@dimen/_16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
