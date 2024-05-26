@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.emergency.views.activity
 
 import android.Manifest
@@ -175,12 +177,12 @@ class MainActivity : BaseActivity(), View.OnClickListener, ShakeDetector.Listene
     }
 
     private fun sendSMS(phoneNumber: String, message: String) {
-        val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"), 0)
+        val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"),  PendingIntent.FLAG_UPDATE_CURRENT)
         SmsManager.getDefault().sendTextMessage(phoneNumber, null, message, sentPI, null)
     }
 
     private fun sendSMS2(phoneNumber: String, message: String) {
-        val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"), 0)
+        val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"), PendingIntent.FLAG_UPDATE_CURRENT)
         SmsManager.getDefault().sendTextMessage(phoneNumber, null, message, sentPI, null)
     }
 
@@ -193,54 +195,44 @@ class MainActivity : BaseActivity(), View.OnClickListener, ShakeDetector.Listene
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            // Permissions not granted, handle accordingly
+            Log.e("TAG", "Location permissions not granted")
             return
         }
+
+        // Check if client is null or permissions are not granted
+        if (client == null) {
+            Log.e("TAG", "FusedLocationProviderClient is null")
+            return
+        }
+
+        // Get last known location
         client!!.lastLocation.addOnSuccessListener { location ->
 
-            Log.d("TAG", "Trouble:" + location.latitude + location.longitude)
+            if (location != null) {
+                // Use the last known location
+                Log.d("TAG", "Last known location: ${location.latitude}, ${location.longitude}")
 
-            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= 26) {
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        200,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
+                // Send alert message with the last known location
+                val message =
+                    "Hi, I need help. My live location is http://maps.google.com/maps?daddr=${location.latitude},${location.longitude}"
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
+                preferences.getString("phone1", null)?.takeIf { it.isNotEmpty() }?.let { phone1 ->
+                    sendSMS(phone1, message)
+                }
+                preferences.getString("phone2", null)?.takeIf { it.isNotEmpty() }?.let { phone2 ->
+                    sendSMS2(phone2, message)
+                }
             } else {
-                vibrator.vibrate(1000)
+                // Last known location is null, handle accordingly (e.g., request location updates)
+                Log.e("TAG", "Error getting last known location")
             }
-            val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-            if (preferences.getString("phone1", "")!!.isNotEmpty() && preferences.getString(
-                    "phone1",
-                    ""
-                ) != null
-            ) {
-                sendSMS(
-                    preferences.getString("phone1", "")!!, "Hi, I need help. My live location is " +
-                            "http://maps.google.com/maps?daddr=" + location.latitude + "," + location.longitude
-                )
-            }
-
-            if (preferences.getString("phone2", "")!!.isNotEmpty() && preferences.getString(
-                    "phone2",
-                    ""
-                ) != null
-            ) {
-                sendSMS2(
-                    preferences.getString("phone2", "")!!,
-                    "Hi, I need help. My live location is " +
-                            "http://maps.google.com/maps?daddr=" + location.latitude + "," + location.longitude
-                )
-            }
+        }.addOnFailureListener { e ->
+            // Handle failure to retrieve last known location
+            Log.e("TAG", "Error getting last known location", e)
+            // You may prompt the user to enable location services or request location updates here
+            // For example:
+            // requestLocationUpdates()
+        }
         }
     }
-
-}

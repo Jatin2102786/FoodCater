@@ -39,41 +39,50 @@ lateinit var hopital: CardView
     }
 
     override fun onClick(p0: View?) {
-       when(p0?.id)
-       {
-           R.id.cvFire->
-           {
-               val task = acessGeo!!.mylocation
-               task.addOnSuccessListener { location ->
-                   val geoIntentUri =
-                       Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Fire Station")
-                   val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
-                   startActivity(mapIntent)
-               }
-           }
+        when(p0?.id) {
+            R.id.cvFire -> {
+                val task = acessGeo!!.mylocation
+                task.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val geoIntentUri =
+                            Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Fire Station")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
+                        startActivity(mapIntent)
+                    } else {
+                        // Handle the case where location is null
+                    }
+                }
+            }
 
-           R.id.cvPolice->
-           {
-               val task = acessGeo!!.mylocation
-               task.addOnSuccessListener { location ->
-                   val geoIntentUri =
-                       Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Police Station")
-                   val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
-                   startActivity(mapIntent)
-               }
-           }
+            R.id.cvPolice -> {
+                val task = acessGeo!!.mylocation
+                task.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val geoIntentUri =
+                            Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Police Station")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
+                        startActivity(mapIntent)
+                    } else {
+                        // Handle the case where location is null
+                    }
+                }
+            }
 
-           R.id.cvPharmacy->
-           {
-               val task = acessGeo!!.mylocation
-               task.addOnSuccessListener { location ->
-                   val geoIntentUri =
-                       Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Hospitals")
-                   val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
-                   startActivity(mapIntent)
-               }
-           }
-       }
+            R.id.cvPharmacy -> {
+                val task = acessGeo!!.mylocation
+                task.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val geoIntentUri =
+                            Uri.parse("geo:" + location.latitude + "," + location.longitude + "?q=Hospitals")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, geoIntentUri)
+                        startActivity(mapIntent)
+                    } else {
+                        // Handle the case where location is null
+                    }
+                }
+            }
+        }
     }
 
 }
+

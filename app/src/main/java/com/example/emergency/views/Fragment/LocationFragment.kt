@@ -63,19 +63,24 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             return
         }
         client!!.lastLocation.addOnSuccessListener { location ->
-            Log.d("TAG", "onCreateView: " + location.latitude)
-            lat = location.latitude
-            lng = location.longitude
+            if (location != null) {
+                Log.d("TAG", "onCreateView: " + location.latitude)
+                lat = location.latitude
+                lng = location.longitude
 
-
-            val sydney = LatLng(location.latitude, location.longitude)
-            map!!.animateCamera(CameraUpdateFactory.newLatLng(sydney))
-            map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15.0F))
-            map.addMarker(
-                MarkerOptions()
-                    .position(sydney)
-                    .title("My location")
-            )
+                val sydney = LatLng(location.latitude, location.longitude)
+                map!!.animateCamera(CameraUpdateFactory.newLatLng(sydney))
+                map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15.0F))
+                map.addMarker(
+                    MarkerOptions()
+                        .position(sydney)
+                        .title("My location")
+                )
+            } else {
+                Log.e("TAG", "Last known location is null")
+                // Handle the case where last known location is null
+            }
         }
+
     }
 }
